@@ -1,0 +1,43 @@
+{
+	"env_name": "PoseEnv-v2",
+	"cam_id": [1, 2, 3, 4, 5, 6],
+	"pitch": 0,
+	"max_steps": 100,
+	"visual_distance": 800,
+	"visual_angle": 90,
+	"nav": "Goal",
+	"targets": [
+        "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9", "a10", "a11",
+		"b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", "b11"
+	],
+	"rotation_scale": 5,
+    "moving_scale": 10,
+	"discrete_actions": [
+		[0, 0],
+		[0, 1],
+        [0, -1],
+        [1, 0],
+		[1, 1],
+        [1, -1],
+        [-1, 0],
+		[-1, 1],
+        [-1, -1]
+	],
+	"safe_start" :[
+		[-1000, 1000, -600, 600]
+    ],
+	"reset_area" : [-1050, 1050, -680, 680],
+	"cam_area" : [
+		[0],
+		[1050],
+		[2100],
+		[3460],
+		[4510],
+		[5560]
+	],
+	"target_moving_param": {
+		"velocity": [50, 100],
+		"angle":  [-30, 30],
+		"random_step": [-10, 10]
+	}
+}
