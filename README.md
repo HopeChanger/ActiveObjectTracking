@@ -2,6 +2,17 @@
 This repository is the python implementation of Multi-Target Active Object Tracking with Monte Carlo Tree Search and Target Motion Modeling.
 
 ## 2D Environments
+6 environments with different parameters.
+
+| Environment name | Camera nums | Target nums | Field size | File name |
+|:-----:|:-----:|:-----:|:-----:|:-----:|
+| Volleyball_A | 6 | 12 | 2400*1200 | pq-PoseEnvBase.json |
+| Basketball_A | 6 | 10 | 2240*1200 | lq-PoseEnvBase.json |
+| Football_A | 6 | 22 | 2100*1360 | zq-PoseEnvBase.json |
+| Volleyball_B | 4 | 12 | 2400*1200 | pq-4cam-PoseEnvBase.json |
+| Basketball_B | 4 | 10 | 2240*1200 | lq-4cam-PoseEnvBase.json |
+| Football_B | 4 | 22 | 2100*1360 | zq-4cam-PoseEnvBase.json |
+
 ![image](https://github.com/HopeChanger/ActiveObjectTracking/blob/master/render/output.jpg)
 
 ## Training
