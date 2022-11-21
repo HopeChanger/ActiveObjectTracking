@@ -2,7 +2,7 @@
 This repository is the python implementation of Multi-Target Active Object Tracking with Monte Carlo Tree Search and Target Motion Modeling.
 
 ## 2D Environments
-![Env](https://github.com/HopeChanger/ActiveObjectTracking/render/output.gif)
+![Env](https://github.com/HopeChanger/ActiveObjectTracking/render/output.jpg)
 
 ## Training
 ### Train the Multi-Agent Network
