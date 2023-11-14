@@ -14,7 +14,7 @@ class EpisodeBatch:
                  device="cpu"):
         self.scheme = scheme.copy()
         self.groups = groups
-        self.batch_size = batch_size #5000
+        self.batch_size = batch_size
         self.max_seq_length = max_seq_length
         self.preprocess = {} if preprocess is None else preprocess
         self.device = device
@@ -26,25 +26,6 @@ class EpisodeBatch:
             self.data.transition_data = {}
             self.data.episode_data = {}
             self._setup_data(self.scheme, self.groups, batch_size, max_seq_length, self.preprocess)
-        #self.data.episode_data = {}
-        #self.data.transition_data = {'state': 5000*71*98, ...}
-
-    # scheme = {
-    #     "state": {"vshape": env_info["state_shape"]},
-    #     "obs": {"vshape": env_info["obs_shape"], "group": "agents"},
-    #     "actions": {"vshape": (1,), "group": "agents", "dtype": th.long},
-    #     "avail_actions": {"vshape": (env_info["n_actions"],), "group": "agents", "dtype": th.int},
-    #     "reward": {"vshape": (1,)},
-    #     "terminated": {"vshape": (1,), "dtype": th.uint8},
-    #     "actions_onehot": {"vshape": (args.n_actions,), "dtype": th.float32, "group": "agents"},
-    #     "filled": {"vshape": (1,), "dtype": th.long}
-    # }
-    # groups = {
-    #     "agents": args.n_agents
-    # }
-    # preprocess = {
-    #     "actions": ("actions_onehot", [OneHot(out_dim=args.n_actions)])
-    # }
 
     def _setup_data(self, scheme, groups, batch_size, max_seq_length, preprocess):
         if preprocess is not None:
@@ -120,7 +101,7 @@ class EpisodeBatch:
 
             dtype = self.scheme[k].get("dtype", th.float32)
             v = th.tensor(v, dtype=dtype, device=self.device) 
-            self._check_safe_view(v, target[k][_slices]) #v.shape:[1, 4],target[k][_slices].shape:[1, 1, 4, 1]
+            self._check_safe_view(v, target[k][_slices])
             target[k][_slices] = v.view_as(target[k][_slices])
 
             if k in self.preprocess:
@@ -193,9 +174,9 @@ class EpisodeBatch:
     def _parse_slices(self, items):
         parsed = []
         # Only batch slice given, add full time slice
-        if (isinstance(items, slice)  # slice a:b
-            or isinstance(items, int)  # int i
-            or (isinstance(items, (list, np.ndarray, th.LongTensor, th.cuda.LongTensor)))  # [a,b,c]
+        if (isinstance(items, slice)
+            or isinstance(items, int)
+            or (isinstance(items, (list, np.ndarray, th.LongTensor, th.cuda.LongTensor)))
             ):
             items = (items, slice(None))
 
@@ -226,7 +207,7 @@ class EpisodeBatch:
 class ReplayBuffer(EpisodeBatch):
     def __init__(self, scheme, groups, buffer_size, max_seq_length, preprocess=None, device="cpu"):
         super(ReplayBuffer, self).__init__(scheme, groups, buffer_size, max_seq_length, preprocess=preprocess, device=device)
-        self.buffer_size = buffer_size  # same as self.batch_size but more explicit
+        self.buffer_size = buffer_size
         self.buffer_index = 0
         self.episodes_in_buffer = 0
 

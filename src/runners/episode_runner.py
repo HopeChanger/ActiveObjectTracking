@@ -40,7 +40,6 @@ class EpisodeRunner:
             self.mcts = MCTS(search_times=self.args.mcts_times, eta=1.0, net=self.state_to_network_output)
 
     def setup(self, scheme, groups, preprocess, mac):
-        # 把一个函数的某些参数给固定住，返回一个新的函数
         self.new_batch = partial(EpisodeBatch, scheme, groups, self.batch_size, self.episode_limit + 1,
                                  preprocess=preprocess, device=self.args.device)
         self.mac = mac
@@ -64,7 +63,6 @@ class EpisodeRunner:
         self.mac.load_hidden(hidden_states)
         with th.no_grad():
             output = self.mac.forward(self.mcts_batch, 0, test_mode=True)
-            # output = th.nn.functional.softmax(output[0] * 10)
             output = output[0]
         output_hidden = self.mac.read_hidden()
         return output.cpu().numpy(), output_hidden
