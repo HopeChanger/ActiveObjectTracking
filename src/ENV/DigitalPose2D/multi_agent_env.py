@@ -16,13 +16,6 @@ class MultiAgentEnv(object):
                  setting_path=None,
                  render_save_path='./render'
                  ):
-        """
-        Load the environment settings.
-        :param reset_type:
-        :param config_path:
-        :param setting_path:
-        :param render_save_path:
-        """
 
         self.reset_type = reset_type
         self.render_save_path = render_save_path
@@ -188,7 +181,7 @@ class MultiAgentEnv(object):
             self.add_trajectory(cam, cam_action[1] * self.moving_scale)
 
     def target_move(self, fix_step=None):
-        delta_time = 0.13
+        delta_time = 1.3
         if 'Random' in self.nav:
             step_min = self.target_moving_param["random_step"][0]
             step_max = self.target_moving_param["random_step"][1]
@@ -196,7 +189,7 @@ class MultiAgentEnv(object):
                 self.target_pos_list[i] += [np.random.randint(step_min, step_max),
                                             np.random.randint(step_min, step_max)]
         elif 'Goal' in self.nav:
-            for i in range(self.target_num):  # only one
+            for i in range(self.target_num):
                 loc = list(self.target_pos_list[i])
                 action = self.random_agents[i].act(loc)
                 delta_x = action[1] * action[0] * delta_time

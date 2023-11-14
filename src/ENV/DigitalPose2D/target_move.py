@@ -16,7 +16,7 @@ class GoalNavAgent(object):
         self.goal_list = goal_list
 
         self.goal = self.generate_goal()
-        self.velocity = np.random.randint(self.velocity_low, self.velocity_high)
+        self.velocity = np.random.randint(self.velocity_low, self.velocity_high) / 10
         self.pose_last = [[], []]
 
     def act(self, pose):
@@ -32,7 +32,7 @@ class GoalNavAgent(object):
             self.pose_last[1] = np.array(pose)
         if self.check_reach(self.goal, pose) or d_moved < 10 or self.step_counter > self.max_len:
             self.goal = self.generate_goal()
-            self.velocity = np.random.randint(self.velocity_low, self.velocity_high)
+            self.velocity = np.random.randint(self.velocity_low, self.velocity_high) / 10
             self.step_counter = 0
 
         delt_unit = (self.goal[:2] - pose[:2]) / np.linalg.norm(self.goal[:2] - pose[:2])
@@ -43,7 +43,7 @@ class GoalNavAgent(object):
         self.step_counter = 0
         self.goal_id = 0
         self.goal = self.generate_goal()
-        self.velocity = np.random.randint(self.velocity_low, self.velocity_high)
+        self.velocity = np.random.randint(self.velocity_low, self.velocity_high) / 10
         self.pose_last = [[], []]
 
     def generate_goal(self):
