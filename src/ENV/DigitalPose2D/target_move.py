@@ -61,3 +61,23 @@ class GoalNavAgent(object):
         error = np.array(now[:2]) - np.array(goal[:2])
         distance = np.linalg.norm(error)
         return distance < 5
+
+
+class LoadTrajData(object):
+    def __init__(self, data_path, target_num, eps_len):
+        self.target_traj = np.load(data_path)
+        assert self.target_traj.shape[1] == target_num
+        assert self.target_traj.shape[2] == (eps_len + 1) * 2
+        self.time_step = 0
+        self.tarj_id = -1
+
+    def act(self):
+        self.time_step += 1
+        out = self.target_traj[self.tarj_id][:, 2*self.time_step:2*(self.time_step+1)].copy()
+        return out
+
+    def reset(self):
+        self.time_step = 0
+        self.tarj_id += 1
+        out = self.target_traj[self.tarj_id][:, :2].copy()
+        return out

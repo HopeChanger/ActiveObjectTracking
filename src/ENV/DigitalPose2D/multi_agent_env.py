@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import matplotlib.patches as mpatches
 
-from ENV.DigitalPose2D.target_move import GoalNavAgent
+from ENV.DigitalPose2D.target_move import GoalNavAgent, LoadTrajData
 
 
 class MultiAgentEnv(object):
@@ -67,6 +67,8 @@ class MultiAgentEnv(object):
         if 'Goal' in self.nav:
             self.random_agents = [GoalNavAgent(i, self.target_moving_param, self.reset_area)
                                   for i in range(self.target_num)]
+        elif 'Load' in self.nav:
+            self.random_agents = [LoadTrajData(setting['data_path'], self.target_num, self.max_steps)]
 
         self.target_pos_list = None
 
@@ -90,6 +92,8 @@ class MultiAgentEnv(object):
         for i in range(len(self.random_agents)):
             if 'Goal' in self.nav:
                 self.random_agents[i].reset()
+            elif 'Load' in self.nav:
+                self.target_pos_list = self.random_agents[i].reset()
 
         # reset camera
         shuffle_cam_id = np.array(self.cam_id)
@@ -119,6 +123,8 @@ class MultiAgentEnv(object):
         for i in range(len(self.random_agents)):
             if 'Goal' in self.nav:
                 self.random_agents[i].reset()
+            elif 'Load' in self.nav:
+                self.target_pos_list = self.random_agents[i].reset()
 
         # reset camera
         cam_rot = [-45, -90, -135, 135, 90, 45]
@@ -146,6 +152,8 @@ class MultiAgentEnv(object):
         for i in range(len(self.random_agents)):
             if 'Goal' in self.nav:
                 self.random_agents[i].reset()
+            elif 'Load' in self.nav:
+                self.target_pos_list = self.random_agents[i].reset()
 
         # reset camera
         for i, cam in enumerate(self.cam_id):
@@ -196,6 +204,10 @@ class MultiAgentEnv(object):
                 delta_y = action[2] * action[0] * delta_time
                 self.target_pos_list[i][0] += delta_x
                 self.target_pos_list[i][1] += delta_y
+            self.target_pos_list[:, 0] = np.clip(self.target_pos_list[:, 0], self.reset_area[0], self.reset_area[1])
+            self.target_pos_list[:, 1] = np.clip(self.target_pos_list[:, 1], self.reset_area[2], self.reset_area[3])
+        elif 'Load' in self.nav:
+            self.target_pos_list = self.random_agents[0].act()
             self.target_pos_list[:, 0] = np.clip(self.target_pos_list[:, 0], self.reset_area[0], self.reset_area[1])
             self.target_pos_list[:, 1] = np.clip(self.target_pos_list[:, 1], self.reset_area[2], self.reset_area[3])
         elif 'Fix' in self.nav:
