@@ -21,7 +21,7 @@ class EpisodeRunner:
         assert self.batch_size == 1
 
         # self.env = env_REGISTRY[self.args.env](**self.args.env_args)
-        self.env = PoseEnvBase(config_path=self.args.config_path, render_save_path='./render/', args=self.args)
+        self.env = PoseEnvBase(config_path=self.args.config_path, render_save_path=args.render_save_path, args=self.args)
         self.env_info = self.env.get_env_info()
         self.episode_limit = self.env_info['episode_limit']
         self.t = 0

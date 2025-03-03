@@ -46,6 +46,10 @@ class PoseEnvBase(MultiAgentEnv):
         # reward
         reward, team_reward = self.get_reward()
 
+        # render
+        if self.args.render:
+            self.render(file_name="{:03d}.jpg".format(self.count_steps))
+
         done = False
         self.count_steps += 1
         if self.count_steps >= self.max_steps:

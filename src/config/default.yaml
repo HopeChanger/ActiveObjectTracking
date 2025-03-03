@@ -4,6 +4,7 @@
 runner: "episode" # Runs 1 env for an episode
 mac: "basic_mac" # Basic controller
 render: False
+render_save_path: './render/default_path/'
 #env: "sc2" # Environment name
 #env_args: {} # Arguments for the environment
 batch_size_run: 1 # Number of environments to run in parallel
