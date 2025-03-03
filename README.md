@@ -1,5 +1,5 @@
-# Multi-Target Active Object Tracking with Monte Carlo Tree Search and Target Motion Modeling
-This repository is the python implementation of Multi-Target Active Object Tracking with Monte Carlo Tree Search and Target Motion Modeling.
+# Optimizing Camera Motion with MCTS and Target Motion Modeling in Multi-Target Active Object Tracking
+This repository is the python implementation of Optimizing Camera Motion with MCTS and Target Motion Modeling in Multi-Target Active Object Tracking.
 
 ## 2D Environments
 6 environments with different parameters.
